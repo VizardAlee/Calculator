@@ -1,8 +1,9 @@
 //VARIABLES
 const keys = Array.from(document.querySelectorAll('button'));
 const equals = document.querySelector('.equals');
-const opKeys = document.querySelector('.operator');
-const numKeys = document.querySelectorAll('.num');
+const opKeys = Array.from(document.querySelectorAll('.operator'));
+const numKeys = Array.from(document.querySelectorAll('.num'));
+const contKeys = Array.from(document.querySelectorAll('.control'));
 let num1 = '';
 let num2 = '';
 let screenText = 0;
@@ -10,8 +11,8 @@ let screenText = 0;
 let opId = "";
 let result = 0;
 const display = document.querySelector('.display');
-screenText = document.querySelector('.display').textContent;
-
+//display.innerText = screenText;
+/*
 keys.forEach((key)=>{
     key.addEventListener('click', (e)=>{
         if(e.target.innerText === 'Clear') {
@@ -29,7 +30,26 @@ keys.forEach((key)=>{
         }
     })
 });
-
+*/
+numKeys.forEach((numKey) => {
+    numKey.addEventListener('click', (e)=>{
+        display.innerText += e.target.innerText;
+    });
+});
+contKeys.forEach((contKey) => {
+    contKey.addEventListener('click', (e)=> {
+        if(e.target.innerText === "Clear") {
+            return clearVal();
+        } else if (e.target.innerText === "DEL") {
+            return deleteVal();
+        }
+    });
+});
+opKeys.forEach((opKey) => {
+    opKey.addEventListener('click', (e)=>{
+        display.innerText += " " + e.target.innerText + " ";
+    });
+});
 
 
 //CREATING FUNCTIONS FOR ADD, SUBTRACT, MULTIPLY AND DIVIDE
@@ -38,7 +58,6 @@ keys.forEach((key)=>{
 function add(a,b) {
    return a + b;
 }
-console.log(add(1,2,3,4,5,6,7))
 
 //Subtraction
 function subtract(a,b) {
@@ -56,6 +75,7 @@ function divide(a,b) {
 }
 
 //Operate
+/*
 function operate(operator, a, b) {
     a = Number(a); //Ensure inputs are read as numbers using Number method
     b = Number(b);
@@ -75,11 +95,14 @@ function operate(operator, a, b) {
             return null;
     }
 }
-
+*/
 function deleteVal(){
     display.textContent = display.textContent.toString().slice(0,-1);
 }
 
+function clearVal() {
+    display.innerText = "";
+}
 function evaluate() {
 
 }
