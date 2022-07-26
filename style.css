@@ -1,3 +1,43 @@
 body {
     background-color: bisque;
 }
+#calculator {
+    background-color: blueviolet;
+    display: grid;
+    max-width: 400px;
+    margin: 10% auto;
+    justify-content: stretch;
+    border: 1px solid burlywood;
+    box-shadow: 0px 0px 15px 3px grey;
+}
+.keys {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    height: 350px;
+}
+.display {
+    background-color: aliceblue;
+    height: 70px;
+    line-height: 70px;
+    padding: 20px;
+    text-align: right;
+    font-size: 25px;
+    border: 1px solid grey;
+}
+button {
+    border: 0.5px solid grey;
+    text-align: center;
+    cursor: pointer;
+}
+button:hover {
+    background-color: black;
+    color: white;
+    transition: 0.5s;
+}
+.equals {
+    background-color: aquamarine;
+}
+button:active{
+    background-color: red;
+    transition: 0.5ms;
+}
