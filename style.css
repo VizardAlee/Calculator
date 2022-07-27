@@ -13,17 +13,38 @@ body {
 .keys {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    height: 350px;
+    height: 380px;
 }
 .display {
     background-color: aliceblue;
-    height: 70px;
+    height: 120px;
     line-height: 70px;
-    padding: 20px;
+    padding: 5px;
     text-align: right;
-    font-size: 25px;
+   /* font-size: 25px;*/
     border: 1px solid grey;
+    display: grid;
 }
+.result {
+    justify-content: stretch;
+    height: 30px;
+    
+}
+.calculations {
+
+    justify-content: stretch;
+    height: 20px;
+   
+}
+
+.operator-display {
+
+    justify-content: stretch;
+    height: 20px;
+    
+}
+
+
 button {
     border: 0.5px solid grey;
     text-align: center;
@@ -39,5 +60,5 @@ button:hover {
 }
 button:active{
     background-color: red;
-    transition: 0.5ms;
+    /*transition: 0.5ms;*/
 }
