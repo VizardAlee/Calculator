@@ -186,19 +186,20 @@ console.log()
  //Functions
 
  function add(a,b){
-    a + b;
+    return a + b;
  }
-
+console.log(add(2,3))
  function subtract(a,b) {
-    a - b;
+    return a - b;
  }
 
  function divide(a,b){
-    a / b;
+   return a / b;
  }
+ console.log(divide(5,10))
 
  function multiply(a,b){
-    a * b;
+    return a * b;
  }
 
  //Display
@@ -215,3 +216,26 @@ console.log()
         }
     })
  })
+
+ function calc(operator, a, b) {
+    a = parseInt(a);
+    b = parseInt(b);
+    switch(operator){
+        case "+":
+            return add(a,b);
+        case "-":
+            return subtract(a,b);
+        case "*":
+            return multiply(a,b);
+        case "/":
+            if (b === "0") {
+                alert("Nahhh Maan!");
+                return;
+            } else {
+            return divide(a,b);
+            }
+        default:
+            return null;
+    }
+ }
+ //console.log(calc("/", 5, 10));
