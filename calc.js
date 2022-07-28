@@ -176,13 +176,37 @@ console.log()
  const calcDisplay = document.querySelector('.calculations');
  const resultDisplay = document.querySelector('.result');
  const buttons = Array.from(document.querySelectorAll('.keys'));
+ const numKeys = Array.from(document.querySelectorAll('.num'));
+ const opKeys = Array.from(document.querySelectorAll('.operator'));
+ const contKeys = Array.from(document.querySelectorAll('.control'));
 
  let result = 0;
- let num1 = ""; //initial number input
+ let num1 = ""; //stores initial display value
  let num2 = ""; //next number input
  let currCalc = ""; //current calculation
- let currOp = ""; // current operator
+ let currOp = null; // current operator
 
+ numKeys.forEach((numKey)=>{
+    numKey.addEventListener('click', (e)=>{
+        calcDisplay.textContent += e.target.textContent;
+    });
+ });
+
+opKeys.forEach((opKey)=>{
+    opKey.addEventListener('click', (e)=>{
+        calcDisplay.textContent += " " + e.target.textContent + " ";
+    });
+});
+
+contKeys.forEach((contKey)=>{
+    contKey.addEventListener('click', (e)=>{
+        if (e.target.textContent === "Clear") {
+           clear();
+        } else if (e.target.textContent === "DEL") {
+            deleter();
+        }
+    })
+})
  //Functions
 
  function add(a,b){
@@ -205,17 +229,7 @@ console.log(add(2,3))
  //Display
  //to access the display area we'll need to delegate events to the buttons
 
- buttons.forEach((button)=> {
-    button.addEventListener('click', (e)=>{
-        if (e.target.classList.contains("num")){
-           calcDisplay.textContent += e.target.textContent;
-        } else if(e.target.classList.contains("operator")) {
-            opDisplay.textContent = e.target.textContent;
-        } else if(e.target.innerText === "=") {
-            resultDisplay.textContent = "That's your answer!"
-        }
-    })
- })
+
 
  function calc(operator, a, b) {
     a = parseInt(a);
@@ -239,3 +253,13 @@ console.log(add(2,3))
     }
  }
  //console.log(calc("/", 5, 10));
+
+function clear() {
+    calcDisplay.textContent = '';
+    opDisplay.textContent = '';
+    resultDisplay.textContent = '';
+}
+
+function deleter(){
+    calcDisplay.textContent = calcDisplay.textContent.toString().slice(0,-1);
+}
