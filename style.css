@@ -1,14 +1,18 @@
 body {
     background-color: bisque;
+ 
+}
+#header {
+    margin: 0 42.5%;
 }
 #calculator {
     background-color: blueviolet;
     display: grid;
     max-width: 400px;
-    margin: 10% auto;
+    margin: 2% auto;
     justify-content: stretch;
     border: 1px solid burlywood;
-    box-shadow: 0px 0px 15px 3px grey;
+    box-shadow: 1px 1px 5px 3px grey;
 }
 .keys {
     display: grid;
@@ -16,7 +20,8 @@ body {
     height: 380px;
 }
 .display {
-    background-color: aliceblue;
+    background-color: rgb(14, 16, 18);
+    color: aliceblue;
     height: 120px;
     line-height: 70px;
     padding: 5px;
@@ -44,21 +49,23 @@ body {
     
 }
 
-
 button {
     border: 0.5px solid grey;
     text-align: center;
     cursor: pointer;
+    font-size: medium;
 }
 button:hover {
     background-color: black;
     color: white;
-    transition: 0.5s;
 }
 .equals {
     background-color: aquamarine;
 }
 button:active{
     background-color: red;
-    /*transition: 0.5ms;*/
+    transition: 0.2ms;
+}
+.result {
+    color: white;
 }

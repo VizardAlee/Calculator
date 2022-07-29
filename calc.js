@@ -1,158 +1,3 @@
-/*
-//VARIABLES
-const keys = Array.from(document.querySelectorAll('button'));
-const equals = document.querySelector('.equals');
-const opKeys = Array.from(document.querySelectorAll('.operator'));
-const numKeys = Array.from(document.querySelectorAll('.num'));
-const contKeys = Array.from(document.querySelectorAll('.control'));
-let num1 = '';
-let num2 = '';
-//let screenText = 0;
-let currentOp = "";
-
-let opId = "";
-let result = 0;
-const display = document.querySelector('.display');
-//display.innerText = screenText;
-/*
-keys.forEach((key)=>{
-    key.addEventListener('click', (e)=>{
-        if(e.target.innerText === 'Clear') {
-            display.innerText = "";
-        }else if (e.target.innerText === "DEL") {
-            return deleteVal();
-        } else if (e.target.innerText === ".") {
-            if (display.innerText.includes('.')) {
-                return;
-            } else {
-                display.innerText += e.target.innerText;
-            }
-        } else {
-            display.innerText += e.target.innerText;
-        }
-    })
-});
-*
-numKeys.forEach((numKey) => {
-    numKey.addEventListener('click', (e)=>{
-        display.innerText += e.target.innerText;
-    });
-});
-contKeys.forEach((contKey) => {
-    contKey.addEventListener('click', (e)=> {
-        if(e.target.innerText === "Clear") {
-            return clearVal();
-        } else if (e.target.innerText === "DEL") {
-            return deleteVal();
-        }
-    });
-});
-opKeys.forEach((opKey) => {
-    opKey.addEventListener('click', (e)=>{
-        if(e.target.innerText === "=") {
-            return evaluate();
-        } else {
-        display.innerText += " " + e.target.innerText + " ";
-        }
-    });
-});
-equals.addEventListener('click', evaluate);
-
-
-//CREATING FUNCTIONS FOR ADD, SUBTRACT, MULTIPLY AND DIVIDE
-
-//Addition
-function add(a,b) {
-   return a + b;
-}
-
-//Subtraction
-function subtract(a,b) {
-    return a - b;
-}
-
-//Multiplication
-function multiply(a,b) {
-    return a * b;
-}
-
-//Division
-function divide(a,b) {
-    return a / b;
-}
-
-//Operate
-
-function operate(operator, a, b) {
-    a = Number(a); //Ensure inputs are read as numbers using Number method
-    b = Number(b);
-
-    //Using switch statement to make provision for all operators
-    switch(operator) {
-        case '+':
-            return add(a,b);
-        case '-':
-            return subtract(a,b);
-        case '*':
-            return multiply(a,b);
-        case '/':
-            if (b===0) return "Nah Maan!"
-            else return divide(a,b);
-        default:
-            return null;
-    }
-}
-
-function deleteVal(){
-    display.textContent = display.textContent.toString().slice(0,-1);
-}
-
-function clearVal() {
-    display.innerText = "";
-}
-function evaluate() {
-    if (currentOp === null ) {
-        return;
-    }
-    if(currentOp === "/" && display.innerText === "0") {
-        alert("Calm down bro! Look again");
-        return;
-    }
-    num2 = display.textContent;
-    display.textContent = roundResult(operate(currentOp, num1, num2));
-    //console.log();
-}
-
-function roundResult(num) {
-    return Math.round(num);
-}
-
-function calculations(operator) {
-    if (currentOp !== null) evaluate();
-    num1 = display.innerText;
-    currentOp = operator;
-
-}
-console.log(operate("+", 2, 3));
-//Display
-/*
-function displayOp(set) {
-    if(screenText === 0  || screenText === "0" || screenText === "") {
-        screenText = set;
-    } else if (screenText !== 0 || screenText !== "0" || screenText !== "") {
-        screenText += set;
-    }
-    screenText.parseFloat(document.querySelector('.display').textContent)
-}
-*/
-/*
-let a = 3;
-let b = 2;
-console.log(operate(divide,a,b));
-console.log()
-*/
-/***********************************/
-
 
 //What calculator has
 
@@ -171,95 +16,134 @@ console.log()
  - there should be function for calculations
  */
 
- const display = document.querySelector('.display');
- const opDisplay = document.querySelector('.operator-display');
- const calcDisplay = document.querySelector('.calculations');
- const resultDisplay = document.querySelector('.result');
+
+
+ //const calcDisplay = document.querySelector('.calculations');
  const buttons = Array.from(document.querySelectorAll('.keys'));
  const numKeys = Array.from(document.querySelectorAll('.num'));
  const opKeys = Array.from(document.querySelectorAll('.operator'));
  const contKeys = Array.from(document.querySelectorAll('.control'));
+ const decimal = document.querySelector('.point')
+ const greeting = document.querySelector('.greet');
+ const resultDisplay = document.querySelector('result');
 
+/*
  let result = 0;
- let num1 = ""; //stores initial display value
- let num2 = ""; //next number input
- let currCalc = ""; //current calculation
- let currOp = null; // current operator
+ let num1 = ""; 
+ let num2 = ""; 
+ let currCalc = ""; 
+ let currOp = null;
+ let resetScreen = false;
+*/
+ //the new guy
+ 
+ calculate = {
+    displayVal: '',
+    num1: null,
+    waitForNum2: false,
+    operator: null
+ }
+
+ function updateDisp() {
+    const disp = document.querySelector('.calculations');
+    disp.textContent = calculate.displayVal;
+}
+
+
+updateDisp();
+
+const performCalc = {
+    '+': (num1, num2) => num1 + num2,
+    '-': (num1, num2) => num1 - num2,
+    '*': (num1, num2) => num1 * num2,
+    '/': (num1, num2) => num1 / num2,
+    '=': (num2) => num2
+  };
 
  numKeys.forEach((numKey)=>{
-    numKey.addEventListener('click', (e)=>{
-        calcDisplay.textContent += e.target.textContent;
-    });
+    numKey.addEventListener('click', ()=>{
+       inputNumber(numKey.textContent);
+       updateDisp();
+    })
  });
 
 opKeys.forEach((opKey)=>{
-    opKey.addEventListener('click', (e)=>{
-        calcDisplay.textContent += " " + e.target.textContent + " ";
+    opKey.addEventListener('click', ()=> {
+        manageOperator(opKey.textContent);
+        const opDisplay = document.querySelector(".operator-display")
+        opDisplay.textContent = opKey.textContent;
+        if (opKey.textContent === "=") {
+            opDisplay.textContent = "";
+        }
+        updateDisp();
     });
 });
 
 contKeys.forEach((contKey)=>{
     contKey.addEventListener('click', (e)=>{
         if (e.target.textContent === "Clear") {
-           clear();
+            clearAll();
+            updateDisp();
         } else if (e.target.textContent === "DEL") {
             deleter();
+            updateDisp();
+        } else if (e.target.textContent === "Greeting!") {
+            resultDisplay.textContent = "Hello";
         }
-    })
-})
- //Functions
+    });
+});
 
- function add(a,b){
-    return a + b;
- }
-console.log(add(2,3))
- function subtract(a,b) {
-    return a - b;
- }
-
- function divide(a,b){
-   return a / b;
- }
- console.log(divide(5,10))
-
- function multiply(a,b){
-    return a * b;
- }
-
- //Display
- //to access the display area we'll need to delegate events to the buttons
-
-
-
- function calc(operator, a, b) {
-    a = parseInt(a);
-    b = parseInt(b);
-    switch(operator){
-        case "+":
-            return add(a,b);
-        case "-":
-            return subtract(a,b);
-        case "*":
-            return multiply(a,b);
-        case "/":
-            if (b === "0") {
-                alert("Nahhh Maan!");
-                return;
-            } else {
-            return divide(a,b);
-            }
-        default:
-            return null;
+decimal.addEventListener('click', (e)=>{
+    if (e.target.textContent === ".") {
+        inputDecimal();
+        updateDisp();
     }
- }
- //console.log(calc("/", 5, 10));
+})
 
-function clear() {
-    calcDisplay.textContent = '';
-    opDisplay.textContent = '';
-    resultDisplay.textContent = '';
+function clearAll() {
+    const opDisplay = document.querySelector(".operator-display");
+
+    calculate.displayVal = '';
+    calculate.num1 = null;
+    calculate.waitForNum2 = false;
+    calculate.operator = null;
+    opDisplay.textContent = "";
 }
 
+
 function deleter(){
-    calcDisplay.textContent = calcDisplay.textContent.toString().slice(0,-1);
+    calculate.displayVal = calculate.displayVal.slice(0,-1);
+}
+
+function inputNumber(number){
+    const {displayVal, waitForNum2} = calculate;
+    if (waitForNum2 === true){
+        calculate.displayVal = number;
+        calculate.waitForNum2 = false;
+    } else {
+        calculate.displayVal = displayVal === "" ? number : displayVal + number;
+    }
+    return calculate;
+}
+function inputDecimal() {
+    //Only if the `dispValue` does not contain a decimal point, append the decimal
+    let decimal = ".";
+
+        if (!calculate.displayVal.includes(decimal)) {
+            calculate.displayVal += decimal;
+        } 
+  }
+function  manageOperator(oper){
+    const {num1, displayVal, operator} = calculate;
+    const input = parseFloat(displayVal);
+    if(num1 === null) {
+    calculate.num1 = input;
+    } else if(operator){
+    const output = performCalc[operator](num1, input);
+    calculate.displayVal = String(output);
+    calculate.num1 = output;
+    }
+    calculate.waitForNum2 = true;
+    calculate.operator = oper;
+    return calculate;
 }
